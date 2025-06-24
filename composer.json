@@ -1,7 +1,6 @@
 {
   "name": "ahmed-aliraqi/laravel-filterable",
   "description": "Elegant query filtering for Laravel Eloquent models",
-  "type": "package",
   "license": "MIT",
   "authors": [
     {
