@@ -121,14 +121,16 @@ class UserFilter extends BaseFilter
 
 Then use the include parameter in your requests:
 
+#### Include single relation
 ```http
-# Include single relation
 GET /api/users?include=posts
-
-# Include multiple relations (comma-separated)
+```
+#### Include multiple relations (comma-separated)
+```http
 GET /api/users?include=posts,comments
-
-# Include nested relations (dot notation)
+```
+#### Include nested relations (dot notation)
+```http
 GET /api/users?include=posts.comments
 ```
 
