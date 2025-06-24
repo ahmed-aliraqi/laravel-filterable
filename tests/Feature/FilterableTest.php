@@ -5,7 +5,6 @@ namespace AhmedAliraqi\LaravelFilterable\Tests\Feature;
 use AhmedAliraqi\LaravelFilterable\Tests\Fixtures\User;
 use AhmedAliraqi\LaravelFilterable\Tests\Fixtures\UserFilter;
 use AhmedAliraqi\LaravelFilterable\Tests\TestCase;
-use Illuminate\Http\Request;
 
 class FilterableTest extends TestCase
 {
@@ -21,8 +20,7 @@ class FilterableTest extends TestCase
 
     public function test_it_can_filter_by_name()
     {
-        $request = Request::create('/', 'GET', ['name' => 'John']);
-        $filter = new UserFilter($request);
+        $filter = new UserFilter(['name' => 'John']);
 
         $users = User::filter($filter)->get();
 
@@ -32,8 +30,7 @@ class FilterableTest extends TestCase
 
     public function test_it_can_filter_by_exact_email()
     {
-        $request = Request::create('/', 'GET', ['email' => 'jane@example.com']);
-        $filter = new UserFilter($request);
+        $filter = new UserFilter(['email' => 'jane@example.com']);
 
         $users = User::filter($filter)->get();
 
@@ -43,8 +40,7 @@ class FilterableTest extends TestCase
 
     public function test_it_can_filter_by_age_range()
     {
-        $request = Request::create('/', 'GET', ['age_from' => 25, 'age_to' => 30]);
-        $filter = new UserFilter($request);
+        $filter = new UserFilter(['age_from' => 25, 'age_to' => 30]);
 
         $users = User::filter($filter)->get();
 
@@ -54,8 +50,7 @@ class FilterableTest extends TestCase
 
     public function test_it_returns_all_records_when_no_filters_applied()
     {
-        $request = Request::create('/', 'GET', []);
-        $filter = new UserFilter($request);
+        $filter = new UserFilter([]);
 
         $users = User::filter($filter)->get();
 
@@ -64,11 +59,10 @@ class FilterableTest extends TestCase
 
     public function test_it_can_combine_multiple_filters()
     {
-        $request = Request::create('/', 'GET', [
+        $filter = new UserFilter([
             'age_from' => 30,
             'name' => 'Bob',
         ]);
-        $filter = new UserFilter($request);
 
         $users = User::filter($filter)->get();
 
@@ -79,11 +73,10 @@ class FilterableTest extends TestCase
 
     public function test_it_ignores_undefined_filters()
     {
-        $request = Request::create('/', 'GET', [
+        $filter = new UserFilter([
             'undefined_filter' => 'value',
             'name' => 'John',
         ]);
-        $filter = new UserFilter($request);
 
         $users = User::filter($filter)->get();
 

@@ -3,7 +3,8 @@
 namespace AhmedAliraqi\LaravelFilterable;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 
 abstract class BaseFilter
@@ -22,8 +23,17 @@ abstract class BaseFilter
      * Create a new BaseFilters instance.
      */
     public function __construct(
-        protected Request $request
-    ) {}
+        protected array $data = []
+    ) {
+        if (empty($this->data)) {
+            $this->data = App::make('request')->query();
+        }
+    }
+
+    protected function getFilteredData(): array
+    {
+        return Arr::only($this->data, $this->filters);
+    }
 
     /**
      * Apply the filters.
@@ -33,9 +43,9 @@ abstract class BaseFilter
         $this->builder = $builder;
 
         foreach ($this->getFilters() as $filter) {
-            $value = $this->request->query($filter);
+            $value = data_get($this->data, $filter);
 
-            if (! $this->request->has($filter)) {
+            if (! array_key_exists($filter, $this->getFilteredData())) {
                 continue;
             }
 

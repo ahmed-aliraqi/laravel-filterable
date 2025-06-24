@@ -82,7 +82,7 @@ use App\Http\Filters\UserFilter;
 
 public function index(Request $request)
 {
-    $users = User::filter(new UserFilter($request))->get();
+    $users = User::filter(new UserFilter($request->query()))->get();
 
     return response()->json($users);
 }
@@ -127,12 +127,14 @@ class UserFilter extends BaseFilter
     public function ageRange($value)
     {
         [$min, $max] = explode(',', $value);
+        
         $this->builder->whereBetween('age', [$min, $max]);
     }
 
     public function createdBetween($value)
     {
         [$start, $end] = explode(',', $value);
+        
         $this->builder->whereBetween('created_at', [$start, $end]);
     }
 }
