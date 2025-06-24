@@ -4,7 +4,7 @@ A simple and elegant way to add filtering capabilities to your Laravel Eloquent 
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/ahmed-aliraqi/laravel-filterable.svg?style=flat-square)](https://packagist.org/packages/ahmed-aliraqi/laravel-filterable)
 [![tests](https://github.com/ahmed-aliraqi/laravel-filterable/actions/workflows/tests.yaml/badge.svg?branch=main)](https://github.com/ahmed-aliraqi/laravel-filterable/actions/workflows/tests.yaml)
-[![Total Downloads](https://img.shields.io/packagist/dt/ahmed-aliraqi/laravel-filterable.svg?style=flat-square)](https://packagist.org/packages/ahmed-aliraqi/laravel-filterable)
+[![Total Downloads](https://poser.pugx.org/ahmed-aliraqi/laravel-filterable/d/total.svg)](https://packagist.org/packages/ahmed-aliraqi/laravel-filterable)
 
 ## Installation
 
