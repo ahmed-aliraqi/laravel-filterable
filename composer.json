@@ -1,0 +1,36 @@
+{
+  "name": "ahmed-aliraqi/laravel-filterable",
+  "description": "Elegant query filtering for Laravel Eloquent models",
+  "type": "package",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ahmed Fathy",
+      "homepage": "https://fathy.me"
+    }
+  ],
+  "require": {
+    "php": "^8.0",
+    "illuminate/support": "^9.0|^10.0|^11.0|^12.0",
+    "illuminate/database": "^9.0|^10.0|^11.0|^12.0",
+    "illuminate/http": "^9.0|^10.0|^11.0|^12.0"
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "AhmedAliraqi\\LaravelFilterable\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "AhmedAliraqi\\LaravelFilterable\\FilterableServiceProvider"
+      ]
+    }
+  }
+}
+
