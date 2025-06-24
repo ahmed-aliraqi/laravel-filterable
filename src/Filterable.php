@@ -14,13 +14,31 @@ trait Filterable
     /**
      * Apply all relevant thread filters.
      */
-    public function scopeFilter(Builder $query, ?BaseFilter $filters = null): Builder
+    public function scopeFilter(Builder $query, ?BaseFilter $filter = null): Builder
     {
-        if (! $filters && property_exists($this, 'filter')) {
-            $filters = App::make($this->filter);
+        if (! $filter && property_exists($this, 'filter')) {
+            $filter = App::make($this->filter);
         }
 
-        return $filters->apply($query);
+        return $filter->apply($query);
+    }
+
+    /**
+     * Eager load relationships specified in the filter's include parameter.
+     * Relations can be specified as comma-separated values ('posts,comments')
+     * or using dot notation for nested relations ('posts.comments').
+     */
+    public function loadIncludes(?BaseFilter $filter = null): self
+    {
+        if (! $filter && property_exists($this, 'filter')) {
+            $filter = App::make($this->filter);
+        }
+
+        foreach ($filter->getInclude() as $relation) {
+            $this->load($relation);
+        }
+
+        return $this;
     }
 
     /**

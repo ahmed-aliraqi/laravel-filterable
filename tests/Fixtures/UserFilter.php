@@ -8,6 +8,8 @@ class UserFilter extends BaseFilter
 {
     protected array $filters = ['name', 'email', 'age', 'age_from', 'age_to'];
 
+    protected array $supportedInclude = ['posts', 'comments', 'posts.comments'];
+
     public function name($value)
     {
         $this->builder->where('name', 'like', "$value%");

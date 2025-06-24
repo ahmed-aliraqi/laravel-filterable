@@ -7,6 +7,11 @@ use AhmedAliraqi\LaravelFilterable\BaseFilter;
 class DummyClass extends BaseFilter
 {
     /**
+     * The list of relations that are allowed to be included with the query.
+     */
+    protected array $supportedInclude = [];
+
+    /**
      * Registered filters to operate upon.
      */
     protected array $filters = [

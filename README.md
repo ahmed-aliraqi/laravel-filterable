@@ -98,8 +98,45 @@ $users = User::filter()->get();
 
 Your API endpoints will now automatically respond to query parameters that match your defined filters:
 
+```http
+GET /api/users?name=John&age=25
 ```
-/api/users?name=John&age=25
+
+### Including Relationships
+
+You can include relationships in your filtered results by defining supported includes in your filter class:
+
+```php
+class UserFilter extends BaseFilter
+{
+    protected array $filters = ['name', 'email'];
+    
+    protected array $supportedInclude = [
+        'posts',
+        'comments',
+        'posts.comments' // Nested relationships
+    ];
+}
+```
+
+Then use the include parameter in your requests:
+
+```http
+# Include single relation
+GET /api/users?include=posts
+
+# Include multiple relations (comma-separated)
+GET /api/users?include=posts,comments
+
+# Include nested relations (dot notation)
+GET /api/users?include=posts.comments
+```
+
+You can also load includes on an existing model instance:
+
+```php
+$user = User::find(1);
+$user->loadIncludes(new UserFilter(['include' => 'posts,comments']));
 ```
 
 ## Advanced Usage

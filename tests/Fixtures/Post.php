@@ -2,22 +2,15 @@
 
 namespace AhmedAliraqi\LaravelFilterable\Tests\Fixtures;
 
-use AhmedAliraqi\LaravelFilterable\Filterable;
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class Post extends Model
 {
-    use Filterable;
-
     protected $guarded = [];
 
-    public $timestamps = true;
-
-    protected $filter = UserFilter::class;
-
-    public function posts()
+    public function user()
     {
-        return $this->hasMany(Post::class);
+        return $this->belongsTo(User::class);
     }
 
     public function comments()

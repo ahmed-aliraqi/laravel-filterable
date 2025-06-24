@@ -20,19 +20,22 @@ abstract class BaseFilter
     protected array $filters = [];
 
     /**
+     * The list of relations that are allowed to be included with the query.
+     */
+    protected array $supportedInclude = [];
+
+    /**
      * Create a new BaseFilters instance.
      */
     public function __construct(
-        protected array $data = []
+        protected array $data = [],
+        protected array $include = [],
     ) {
-        if (empty($this->data)) {
-            $this->data = App::make('request')->query();
-        }
-    }
+        $request = App::make('request');
 
-    protected function getFilteredData(): array
-    {
-        return Arr::only($this->data, $this->filters);
+        if (empty($this->data)) {
+            $this->data = $request->query();
+        }
     }
 
     /**
@@ -42,10 +45,10 @@ abstract class BaseFilter
     {
         $this->builder = $builder;
 
-        foreach ($this->getFilters() as $filter) {
+        foreach ($this->filters as $filter) {
             $value = data_get($this->data, $filter);
 
-            if (! array_key_exists($filter, $this->getFilteredData())) {
+            if (! array_key_exists($filter, $this->getFilters())) {
                 continue;
             }
 
@@ -56,11 +59,27 @@ abstract class BaseFilter
             }
         }
 
+        foreach ($this->getInclude() as $include) {
+            $this->builder->with($include);
+        }
+
         return $this->builder;
     }
 
     public function getFilters(): array
     {
-        return property_exists($this, 'filters') ? $this->filters : [];
+        return Arr::only($this->data, $this->filters);
+    }
+
+    public function getInclude(): array
+    {
+        $include = explode(',', data_get($this->data, 'include'));
+
+        return array_values(
+            array_filter(
+                $include,
+                fn ($value) => in_array($value, $this->supportedInclude)
+            )
+        );
     }
 }
