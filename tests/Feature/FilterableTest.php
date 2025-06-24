@@ -5,6 +5,7 @@ namespace AhmedAliraqi\LaravelFilterable\Tests\Feature;
 use AhmedAliraqi\LaravelFilterable\Tests\Fixtures\User;
 use AhmedAliraqi\LaravelFilterable\Tests\Fixtures\UserFilter;
 use AhmedAliraqi\LaravelFilterable\Tests\TestCase;
+use Illuminate\Http\Request;
 
 class FilterableTest extends TestCase
 {
@@ -69,6 +70,33 @@ class FilterableTest extends TestCase
         $this->assertCount(1, $users);
         $this->assertEquals('Bob Johnson', $users->first()->name);
         $this->assertEquals(35, $users->first()->age);
+    }
+
+    public function test_it_can_filter_from_request_query_parameters()
+    {
+        $this->instance('request', new Request([
+            'age_from' => 30,
+            'name' => 'Bob',
+        ]));
+
+        $filter = new UserFilter([]);
+
+        $users = User::filter($filter)->get();
+
+        $this->assertCount(1, $users);
+        $this->assertEquals('Bob Johnson', $users->first()->name);
+        $this->assertEquals(35, $users->first()->age);
+
+        $this->instance('request', new Request([
+            'age_from' => 36,
+            'name' => 'Bob',
+        ]));
+
+        $filter = new UserFilter([]);
+
+        $users = User::filter($filter)->get();
+
+        $this->assertCount(0, $users);
     }
 
     public function test_it_ignores_undefined_filters()
