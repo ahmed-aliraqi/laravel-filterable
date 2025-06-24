@@ -16,7 +16,7 @@ trait Filterable
      */
     public function scopeFilter(Builder $query, ?BaseFilter $filters = null): Builder
     {
-        if (! $filters  && property_exists($this, 'filter')) {
+        if (! $filters && property_exists($this, 'filter')) {
             $filters = App::make($this->filter);
         }
 

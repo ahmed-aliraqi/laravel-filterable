@@ -1,0 +1,15 @@
+<?php
+
+namespace DummyNamespace;
+
+use AhmedAliraqi\LaravelFilterable\BaseFilter;
+
+class DummyClass extends BaseFilter
+{
+    /**
+     * Registered filters to operate upon.
+     */
+    protected array $filters = [
+        //
+    ];
+}

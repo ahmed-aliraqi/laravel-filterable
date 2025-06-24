@@ -10,33 +10,23 @@ abstract class BaseFilter
 {
     /**
      * The Eloquent builder.
-     *
-     * @var \Illuminate\Database\Eloquent\Builder
      */
     protected Builder $builder;
 
     /**
      * Registered filters to operate upon.
-     *
-     * @var array
      */
     protected array $filters = [];
 
     /**
      * Create a new BaseFilters instance.
-     *
-     * @param \Illuminate\Http\Request $request
      */
     public function __construct(
         protected Request $request
-    ) {
-    }
+    ) {}
 
     /**
      * Apply the filters.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function apply(Builder $builder): Builder
     {
