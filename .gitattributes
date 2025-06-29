@@ -4,4 +4,4 @@
 .gitignore export-ignore
 CHANGELOG.md export-ignore
 phpunit.xml.dist export-ignore
-UPGRADE.md export-ignore
+phpunit.xml export-ignore
